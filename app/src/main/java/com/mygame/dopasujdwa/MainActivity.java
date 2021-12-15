@@ -1,19 +1,19 @@
 package com.mygame.dopasujdwa;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.Bindable;
+import androidx.databinding.DataBindingUtil;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.view.View;
 import android.widget.ImageButton;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity {
 
+//    private ActivityMainBinding binding;
     HashMap<Integer, Integer> buttonImagePairs = new HashMap<>();
     ArrayList<Integer> images = new ArrayList<>();
     ArrayList<ImageButton> buttons = new ArrayList<>();
@@ -21,12 +21,18 @@ public class MainActivity extends AppCompatActivity {
     ImageButton firstSelectedButton;
     ImageButton secondSelectedButton;
 
+//    private boolean canClickMemoryButtons = false;
+//
+//    @Bindable
+//    public Boolean getMemoryButtonsClickable() {
+//        return  canClickMemoryButtons;
+//    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+//        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         initializeImages();
     }
 
@@ -70,20 +76,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onMemoryButtonClick (View view) {
+
+
         ImageButton selectedButton = (ImageButton) view;    //castowanie/unboxing
         int buttonId = selectedButton.getId();
-        int buttonImage = buttonImagePairs.get(buttonId);
+
+        if (buttonImagePairs.containsKey(buttonId) == false) {
+            return;
+        }
+
+        int buttonImageId = buttonImagePairs.get(buttonId);
 
         if (firstSelectedButton == null) {
             firstSelectedButton = selectedButton;
-            firstSelectedButton.setBackgroundResource(buttonImage);
+            firstSelectedButton.setBackgroundResource(buttonImageId);
             return;
         }
+
         if (secondSelectedButton == null) {
             secondSelectedButton = selectedButton;
-            secondSelectedButton.setBackgroundResource(buttonImage);
+            secondSelectedButton.setBackgroundResource(buttonImageId);
         }
-        if (firstSelectedButton.getBackground().getConstantState() != secondSelectedButton.getBackground().getConstantState()) {
+
+        if (firstSelectedButton.getBackground().getConstantState() != secondSelectedButton.getBackground().getConstantState()) {    //poczytać o getConstantState()
             Handler handler = new Handler();
             handler.postDelayed(() -> {
                 firstSelectedButton.setBackgroundResource(R.drawable.znakzapytania);

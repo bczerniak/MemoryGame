@@ -9,13 +9,13 @@
 
     <ImageButton
         android:id="@+id/button0"
+        android:tag="0"
+        android:onClick="onMemoryButtonClick"
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/znakzapytania"
-        android:tag="0"
-        android:onClick="onMemoryButtonClick"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
