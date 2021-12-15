@@ -1,6 +1,8 @@
 package com.mygame.dopasujdwa;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -68,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onMemoryButtonClick (View view) {
-        int buttonId = view.getId();
+        ImageButton selectedButton = (ImageButton) view;    //castowanie/unboxing
+        int buttonId = selectedButton.getId();
         int buttonImage = buttonImagePairs.get(buttonId);
-        ImageButton selectedButton = findViewById(buttonId);
 
         if (firstSelectedButton == null) {
             firstSelectedButton = selectedButton;
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 secondSelectedButton.setBackgroundResource(R.drawable.znakzapytania);
                 firstSelectedButton = null;
                 secondSelectedButton = null;
-            }, 2000);
+            }, 500);
         } else {
             buttonImagePairs.remove(firstSelectedButton.getId());
             buttonImagePairs.remove(secondSelectedButton.getId());
