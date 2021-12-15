@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         buttons.add(findViewById(R.id.button10));
         buttons.add(findViewById(R.id.button11));
 
-        Collections.shuffle(images);
+//        Collections.shuffle(images);
 
         for (int i = 0; i < buttons.size(); i++) {
             ImageButton button = buttons.get(i);
