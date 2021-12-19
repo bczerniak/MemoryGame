@@ -30,19 +30,20 @@ public class MainActivity extends AppCompatActivity {
 
         initializeImages();
         initializeButtons();
+
         startGame();
     }
 
-    public void startGame() {
-        startTimer = System.currentTimeMillis();
-
+    private void startGame() {
         Collections.shuffle(images);
 
         buttonImagePairs.clear();
         pairImagesWithButtons();
+
+        startTimer = System.currentTimeMillis();
     }
 
-    public void initializeImages() {
+    private void initializeImages() {
         images.add(R.drawable.cat);
         images.add(R.drawable.cat);
         images.add(R.drawable.dog);
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
         images.add(R.drawable.wolf);
     }
 
-    public void initializeButtons() {
+    private void initializeButtons() {
         buttons.add(findViewById(R.id.button0));
         buttons.add(findViewById(R.id.button1));
         buttons.add(findViewById(R.id.button3));
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         buttons.add(findViewById(R.id.button11));
     }
 
-    public void pairImagesWithButtons() {
+    private void pairImagesWithButtons() {
         for (int i = 0; i < buttons.size(); i++) {
             ImageButton button = buttons.get(i);
             buttonImagePairs.put(button.getId(), images.get(i));
@@ -80,11 +81,18 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onMemoryButtonClick (View view) {
+        setClickable(false);
 
         ImageButton selectedButton = (ImageButton) view;    //castowanie/unboxing
         int buttonId = selectedButton.getId();
 
         if (buttonImagePairs.containsKey(buttonId) == false) {
+            setClickable(true);
+            return;
+        }
+
+        if (firstSelectedButton != null && firstSelectedButton.getId() == buttonId) {
+            setClickable(true);
             return;
         }
 
@@ -93,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         if (firstSelectedButton == null) {
             firstSelectedButton = selectedButton;
             firstSelectedButton.setBackgroundResource(buttonImageId);
+            setClickable(true);
             return;
         }
 
@@ -102,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (firstSelectedButton.getBackground().getConstantState() != secondSelectedButton.getBackground().getConstantState()) {    //poczytać o getConstantState()
-            setClickable(false);
             Handler handler = new Handler();
             handler.postDelayed(() -> {
                 firstSelectedButton.setBackgroundResource(R.drawable.znakzapytania);
@@ -116,24 +124,28 @@ public class MainActivity extends AppCompatActivity {
             buttonImagePairs.remove(secondSelectedButton.getId());
             firstSelectedButton = null;
             secondSelectedButton = null;
+            setClickable(true);
         }
 
         if (buttonImagePairs.isEmpty()) {
-            setClickable(false);
-
-            Toast toast = Toast.makeText(this, "Gratulacje, zwyciężyłeś!!!", Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.CENTER_VERTICAL|Gravity.CENTER_HORIZONTAL, 0,0);
-            toast.show();
-
-            TextView showTime = findViewById(R.id.showTime);
-            showTime.setText("Twój czas wyniósł:  " + (System.currentTimeMillis() - startTimer)/1000 + " sekund");
-
-            Handler handler = new Handler();
-            handler.postDelayed(() -> {
-                findViewById(R.id.playAgainButton).setVisibility(View.VISIBLE);
-                findViewById(R.id.showTime).setVisibility(View.VISIBLE);
-            }, 2000);
+            notifyWinner();
         }
+    }
+
+    private void notifyWinner() {
+        setClickable(false);
+
+        Toast toast = Toast.makeText(this, "Gratulacje, zwyciężyłeś!!!", Toast.LENGTH_SHORT);
+        toast.show();
+
+        TextView showTime = findViewById(R.id.showTime);
+        showTime.setText("Twój czas wyniósł: " + (System.currentTimeMillis() - startTimer)/1000 + " sekund");
+
+        Handler handler = new Handler();
+        handler.postDelayed(() -> {
+            findViewById(R.id.playAgainButton).setVisibility(View.VISIBLE);
+            findViewById(R.id.showTime).setVisibility(View.VISIBLE);
+        }, 2500);
     }
 
     public void playAgain (View view) {
@@ -144,7 +156,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.showTime).setVisibility(View.INVISIBLE);
     }
 
-    public void setClickable (boolean setClickable) {
+    private void setClickable (boolean setClickable) {
         for (int i = 0; i < buttons.size(); i++){
             buttons.get(i).setClickable(setClickable);
         }
