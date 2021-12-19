@@ -10,24 +10,24 @@
 
     <ImageButton
         android:id="@+id/button0"
-        android:tag="0"
-        android:onClick="onMemoryButtonClick"
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/znakzapytania"
+        android:onClick="onMemoryButtonClick"
+        android:tag="0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/button1"
-        android:tag="1"
-        android:onClick="onMemoryButtonClick"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="28dp"
         android:background="@drawable/znakzapytania"
+        android:onClick="onMemoryButtonClick"
+        android:tag="1"
         app:layout_constraintEnd_toStartOf="@+id/button2"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/button0"
@@ -35,13 +35,13 @@
 
     <ImageButton
         android:id="@+id/button2"
-        android:tag="2"
-        android:onClick="onMemoryButtonClick"
         android:layout_width="110dp"
         android:layout_height="110dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="20dp"
         android:background="@drawable/znakzapytania"
+        android:onClick="onMemoryButtonClick"
+        android:tag="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -160,7 +160,7 @@
         android:id="@+id/playAgainButton"
         android:layout_width="219dp"
         android:layout_height="63dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="15dp"
         android:onClick="playAgain"
         android:text="Zagraj ponownie"
         android:visibility="invisible"
@@ -174,7 +174,6 @@
         android:layout_width="400dp"
         android:layout_height="46dp"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="8dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:textAlignment="center"

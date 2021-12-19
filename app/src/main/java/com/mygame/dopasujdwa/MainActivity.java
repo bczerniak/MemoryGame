@@ -27,19 +27,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        initializeGame();
-    }
-
-    public void initializeGame() {
-        startTimer = System.currentTimeMillis();
-
-        buttonImagePairs.clear();
-        buttons.clear();
-        images.clear();
 
         initializeImages();
         initializeButtons();
-        initializePairs();
+        startGame();
+    }
+
+    public void startGame() {
+        startTimer = System.currentTimeMillis();
+
+        Collections.shuffle(images);
+
+        buttonImagePairs.clear();
+        pairImagesWithButtons();
     }
 
     public void initializeImages() {
@@ -55,8 +55,6 @@ public class MainActivity extends AppCompatActivity {
         images.add(R.drawable.tree);
         images.add(R.drawable.wolf);
         images.add(R.drawable.wolf);
-
-        Collections.shuffle(images);
     }
 
     public void initializeButtons() {
@@ -74,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         buttons.add(findViewById(R.id.button11));
     }
 
-    public void initializePairs() {
+    public void pairImagesWithButtons() {
         for (int i = 0; i < buttons.size(); i++) {
             ImageButton button = buttons.get(i);
             buttonImagePairs.put(button.getId(), images.get(i));
@@ -140,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void playAgain (View view) {
         setInitialButtonsBackground();
-        initializeGame();
+        startGame();
         setClickable(true);
         findViewById(R.id.playAgainButton).setVisibility(View.INVISIBLE);
         findViewById(R.id.showTime).setVisibility(View.INVISIBLE);
@@ -158,5 +156,3 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
-
-//może dodać porównanie z najlepszym czasem
